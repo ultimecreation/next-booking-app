@@ -1,11 +1,25 @@
+'use client'
+import createUser from "@/app/actions/createUser";
 import Link from "next/link";
-
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useFormState } from 'react-dom'
+import { toast } from "react-toastify";
 const RegisterPage = () => {
+    const router = useRouter()
+    const [state, formAction] = useFormState(createUser, {})
+    useEffect(() => {
+        if (state.error) toast.error(state.error)
+        if (state.success) {
+            toast.success("Registered successfully")
+            return router.push('/login')
+        }
+    }, [state])
     return (
 
         <div className="flex items-center justify-center">
             <div className="bg-white shadow-lg rounded-lg p-6 w-full max-w-sm mt-20">
-                <form>
+                <form action={formAction}>
                     <h2 className="text-2xl font-bold text-center text-gray-800 mb-6">Register</h2>
 
                     <div className="mb-4">
