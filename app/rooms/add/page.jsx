@@ -1,15 +1,30 @@
+'use client'
+
+import createRoom from "@/app/actions/createRoom";
 import Heading from "@/components/Heading";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { useFormState } from 'react-dom'
+import { toast } from "react-toastify";
 
 const AddRoomPage = () => {
+    const router = useRouter()
+    const [state, formAction] = useFormState(createRoom, {})
+    useEffect(() => {
+        if (state.error) toast.error(state.error)
+        if (state.success) {
+            toast.success("Room created")
+            router.push('/')
+        }
+    }, [state])
     return (
         <>
             <Heading title="Add Room" />
             <div className="bg-white shadow-lg rounded-lg p-6 w-full">
-                <form>
+                <form action={formAction}>
                     <div className="mb-4">
                         <label htmlFor="name" className="block text-gray-700 font-bold mb-2"
-                        >Room Name</label
-                        >
+                        >Room Name</label >
                         <input
                             type="text"
                             id="name"
@@ -22,8 +37,7 @@ const AddRoomPage = () => {
 
                     <div className="mb-4">
                         <label htmlFor="description" className="block text-gray-700 font-bold mb-2"
-                        >Description</label
-                        >
+                        >Description</label >
                         <textarea
                             id="description"
                             name="description"
@@ -34,9 +48,7 @@ const AddRoomPage = () => {
                     </div>
 
                     <div className="mb-4">
-                        <label htmlFor="sqft" className="block text-gray-700 font-bold mb-2"
-                        >Square Feet</label
-                        >
+                        <label htmlFor="sqft" className="block text-gray-700 font-bold mb-2" >Square Feet</label>
                         <input
                             type="number"
                             id="sqft"
@@ -48,8 +60,7 @@ const AddRoomPage = () => {
                     </div>
 
                     <div className="mb-4">
-                        <label htmlFor="capacity" className="block text-gray-700 font-bold mb-2"
-                        >Capacity</label
+                        <label htmlFor="capacity" className="block text-gray-700 font-bold mb-2" >Capacity</label
                         >
                         <input
                             type="number"
@@ -80,8 +91,7 @@ const AddRoomPage = () => {
 
                     <div className="mb-4">
                         <label htmlFor="address" className="block text-gray-700 font-bold mb-2"
-                        >Address</label
-                        >
+                        >Address</label>
                         <input
                             type="text"
                             id="address"
@@ -94,8 +104,7 @@ const AddRoomPage = () => {
 
                     <div className="mb-4">
                         <label htmlFor="location" className="block text-gray-700 font-bold mb-2"
-                        >Location</label
-                        >
+                        >Location</label >
                         <input
                             type="text"
                             id="location"
@@ -108,8 +117,7 @@ const AddRoomPage = () => {
 
                     <div className="mb-4">
                         <label htmlFor="availability" className="block text-gray-700 font-bold mb-2"
-                        >Availability</label
-                        >
+                        >Availability</label >
                         <input
                             type="text"
                             id="availability"
@@ -122,8 +130,7 @@ const AddRoomPage = () => {
 
                     <div className="mb-4">
                         <label htmlFor="amenities" className="block text-gray-700 font-bold mb-2"
-                        >Amenities</label
-                        >
+                        >Amenities</label>
                         <input
                             type="text"
                             id="amenities"
@@ -137,8 +144,7 @@ const AddRoomPage = () => {
                     {/* <!-- Image Upload --> */}
                     <div className="mb-8">
                         <label htmlFor="image" className="block text-gray-700 font-bold mb-2"
-                        >Image</label
-                        >
+                        >Image</label>
 
                         <input
                             type="file"
